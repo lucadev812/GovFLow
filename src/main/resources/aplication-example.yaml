@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/govflow
+    username: postgres
+    password: SUA_SENHA
+
+jwt:
+  secret: SUA_CHAVE_SECRETA
