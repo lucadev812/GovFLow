@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/govflow
     username: postgres
-    password: SUA_SENHA
+    password: PASSWORD
 
 jwt:
-  secret: SUA_CHAVE_SECRETA
+  secret: SECRET
