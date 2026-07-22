@@ -30,5 +30,5 @@ public class Fornecedor {
 
 
     @OneToMany(mappedBy = "fornecedor")
-    private List<Contrato> contratoes = new ArrayList<>();
+    private List<Contrato> contratos = new ArrayList<>();
 }
