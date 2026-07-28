@@ -16,7 +16,7 @@ public class ContratoMapper {
 
         contrato.setNumero(request.getNumero());
         contrato.setValor(request.getValor());
-        contrato.setDataInicio(request.getDataIinicio());
+        contrato.setDataInicio(request.getDataInicio());
         contrato.setDataFim(request.getDataFim());
         contrato.setStatus(request.getStatus());
 

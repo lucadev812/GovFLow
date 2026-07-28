@@ -35,6 +35,11 @@ public class UsuarioService {
         return usuarioMapper.toResponseList(usuarios);
     }
 
+    public UsuarioResponse buscarPorId(Long id){
+        Usuario usuario = buscarUsuario(id);
+        return usuarioMapper.toResponse(usuario);
+    }
+
     private Usuario buscarUsuario(Long id){
         return usuarioRepository.findById(id)
                 .orElseThrow(()->

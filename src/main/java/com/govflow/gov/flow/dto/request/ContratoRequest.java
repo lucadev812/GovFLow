@@ -25,7 +25,7 @@ public class ContratoRequest {
     private BigDecimal valor;
 
     @NotNull(message = "a data de inicio e obrigatoria")
-    private LocalDate dataIinicio;
+    private LocalDate dataInicio;
 
     @NotNull(message = "a data final e obrigatoria")
     private LocalDate dataFim;

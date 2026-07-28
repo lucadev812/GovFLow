@@ -50,13 +50,22 @@ public class ContratoService {
         return mapper.toResponseList(contratos);
     }
 
-    private Contrato buscarContrato(Long id){
+    public ContratoResponse buscarPorId(Long id){
+        return mapper.toResponse(contratoRepository.findById(id)
+
+                .orElseThrow(()-> new ResourceNotFoundException("contrato nao encontrado"))
+
+        );
+    }
+
+    public Contrato buscarContrato(Long id){
         return contratoRepository.findById(id)
                 .orElseThrow(()->
                         new ResourceNotFoundException("contrato nao encontrado"));
+
     }
 
-    private Categoria buscarCategoria(Long id) {
+    public Categoria buscarCategoria(Long id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(()->
                         new ResourceNotFoundException("categoria nao encontrada"));
@@ -75,7 +84,7 @@ public class ContratoService {
 
         contrato.setNumero(request.getNumero());
         contrato.setValor(request.getValor());
-        contrato.setDataInicio(request.getDataIinicio());
+        contrato.setDataInicio(request.getDataInicio());
         contrato.setDataFim(request.getDataFim());
         contrato.setStatus(request.getStatus());
         contrato.setCategoria(categoria);
@@ -101,7 +110,7 @@ public class ContratoService {
     }
 
     private  void validarDatas(ContratoRequest request) {
-        if (request.getDataFim().isBefore(request.getDataIinicio())){
+        if (request.getDataFim().isBefore(request.getDataInicio())){
             throw  new IllegalArgumentException( " A data de termino nao pode ser anterior a data de inicio");
         }
     }
