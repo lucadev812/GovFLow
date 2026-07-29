@@ -5,6 +5,7 @@ import com.govflow.gov.flow.dto.response.ContratoResponse;
 import com.govflow.gov.flow.entity.Categoria;
 import com.govflow.gov.flow.entity.Contrato;
 import com.govflow.gov.flow.entity.Fornecedor;
+import com.govflow.gov.flow.exception.BusinessException;
 import com.govflow.gov.flow.exception.ResourceNotFoundException;
 import com.govflow.gov.flow.mapper.ContratoMapper;
 import com.govflow.gov.flow.repository.CategoriaRepository;
@@ -111,13 +112,13 @@ public class ContratoService {
 
     private  void validarDatas(ContratoRequest request) {
         if (request.getDataFim().isBefore(request.getDataInicio())){
-            throw  new IllegalArgumentException( " A data de termino nao pode ser anterior a data de inicio");
+            throw  new BusinessException( " A data de termino nao pode ser anterior a data de inicio");
         }
     }
 
     private void validarValor(ContratoRequest request) {
         if (request.getValor().compareTo(BigDecimal.ZERO)<= 0 ){
-            throw  new IllegalArgumentException( " Valor nao pode ser negativo");
+            throw  new BusinessException( " Valor nao pode ser negativo");
         }
     }
 

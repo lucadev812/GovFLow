@@ -5,8 +5,8 @@ target/
 !**/src/test/**/target/
 PasswordConfig
 SecurityConfig
-V5__insert__admin
-V6__insert__admin__usuario.sql
+src/resources/db/V6__insert__admin__usuario.sql
+src/resources/db/V5_insert_admin.sql
 
 
 ### STS ###

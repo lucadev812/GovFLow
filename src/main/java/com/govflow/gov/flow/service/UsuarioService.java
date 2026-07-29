@@ -3,6 +3,7 @@ package com.govflow.gov.flow.service;
 import com.govflow.gov.flow.dto.request.UsuarioRequest;
 import com.govflow.gov.flow.dto.response.UsuarioResponse;
 import com.govflow.gov.flow.entity.Usuario;
+import com.govflow.gov.flow.exception.DuplicateResourceException;
 import com.govflow.gov.flow.exception.ResourceNotFoundException;
 import com.govflow.gov.flow.mapper.UsuarioMapper;
 import com.govflow.gov.flow.repository.UsuarioRepository;
@@ -80,7 +81,7 @@ public class UsuarioService {
 
     private void validarEmail(String email) {
         if (usuarioRepository.existsByEmail(email)) {
-            throw  new IllegalArgumentException("ja existe um usuario cadastrado com este email");
+            throw  new DuplicateResourceException("ja existe um usuario cadastrado com este email");
         }
     }
 
