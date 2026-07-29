@@ -20,8 +20,8 @@ public class ContratoRequest {
     @NotBlank(message = "o numero do contrato e obrigatorio")
     private String numero;
 
-    @NotNull(message = "o valor e obirgatorio")
-    @Positive(message = "o valor deve ser mauir que zero")
+    @NotNull(message = "o valor e obrigatorio")
+    @Positive(message = "o valor deve ser maior que zero")
     private BigDecimal valor;
 
     @NotNull(message = "a data de inicio e obrigatoria")
@@ -34,10 +34,12 @@ public class ContratoRequest {
     private Status status;
 
 
-    @NotNull(message="a categoria e obrigatoria")
+    @NotNull(message = "a categoria e obrigatoria")
+    @Positive(message = "O ID da categoria deve ser maior que zero")
     private Long categoriaId;
 
     @NotNull(message = " O fornecedor e obrigatorio")
+    @Positive(message = "O ID do fornecedor deve ser maior que zero")
     private Long fornecedorId;
 
 }

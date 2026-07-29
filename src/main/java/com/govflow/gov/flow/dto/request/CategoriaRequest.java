@@ -14,13 +14,12 @@ import lombok.Setter;
 public class CategoriaRequest {
 
     @NotBlank(message = "Nome e obrigatorio")
-    @Size(max = 100)
+    @Size(max = 100, message = "o nome de ter no maximo 100 caracteres")
     private String nome;
 
-    @NotBlank(message = "descricao ")
-    @Size(max = 250)
+    @NotBlank(message = "descricao obrigatoria")
+    @Size(max = 250, message = "a descricao deve ter no maximo 250 carcteres ")
     private String descricao;
-
 
 
 }

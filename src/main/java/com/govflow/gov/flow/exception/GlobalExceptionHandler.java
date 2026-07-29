@@ -3,10 +3,18 @@ package com.govflow.gov.flow.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import java.time.LocalDateTime;
+import java.util.HashMap;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -68,6 +76,37 @@ public class GlobalExceptionHandler {
                 .body(error);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationException(
+            MethodArgumentNotValidException exception,
+            HttpServletRequest request
+    ) {
+
+        Map<String, String> campos = new LinkedHashMap<>();
+
+        exception.getBindingResult()
+                .getFieldErrors()
+                .forEach(error ->
+                        campos.put(
+                                error.getField(),
+                                error.getDefaultMessage()
+                        )
+                );
+
+        Map<String, Object> resposta = new LinkedHashMap<>();
+
+        resposta.put("timestamp", LocalDateTime.now());
+        resposta.put("status", HttpStatus.BAD_REQUEST.value());
+        resposta.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+        resposta.put("message", "Existem campos inválidos na requisição");
+        resposta.put("path", request.getRequestURI());
+        resposta.put("fields", campos);
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(resposta);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(
             Exception exception,
@@ -86,4 +125,5 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(error);
     }
+
 }
