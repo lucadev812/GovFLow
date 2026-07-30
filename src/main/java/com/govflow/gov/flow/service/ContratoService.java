@@ -107,7 +107,7 @@ public class ContratoService {
 
     private Fornecedor buscarFornecedor(Long id) {
         return fornecedorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("fornecedor nao encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("fornecedor nao encontrado"));
     }
 
     private  void validarDatas(ContratoRequest request) {
@@ -118,7 +118,7 @@ public class ContratoService {
 
     private void validarValor(ContratoRequest request) {
         if (request.getValor().compareTo(BigDecimal.ZERO)<= 0 ){
-            throw  new BusinessException( " Valor nao pode ser negativo");
+            throw  new BusinessException( "O valor deve ser maior que zero");
         }
     }
 

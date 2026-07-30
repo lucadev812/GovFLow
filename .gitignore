@@ -7,7 +7,7 @@ PasswordConfig
 SecurityConfig
 src/main/resources/db/migration/V6__insert_admin_usuario.sql
 src/main/resources/db/migration/V5_insert_admin.sql
-
+.env
 
 ### STS ###
 .apt_generated

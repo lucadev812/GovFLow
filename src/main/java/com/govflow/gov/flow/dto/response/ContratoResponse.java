@@ -1,7 +1,6 @@
 package com.govflow.gov.flow.dto.response;
 
 
-import com.govflow.gov.flow.entity.Categoria;
 import com.govflow.gov.flow.enums.Status;
 import lombok.*;
 
@@ -36,7 +35,5 @@ public class ContratoResponse {
     private String fornecedorNome;
 
 
-    public void setCategoria(Categoria categoria) {
 
-    }
 }

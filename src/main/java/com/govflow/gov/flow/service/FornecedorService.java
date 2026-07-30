@@ -23,7 +23,7 @@ public class FornecedorService {
     public FornecedorResponse salvar(FornecedorRequest request){
 
         validarCnpj(request.getCnpj());
-        validarCnpj(request.getEmail());
+        validaEmail(request.getEmail());
 
         Fornecedor  fornecedor = mapper.toEntity(request);
         fornecedor = repository.save(fornecedor);
@@ -56,10 +56,12 @@ public class FornecedorService {
         fornecedor.setEmail(request.getEmail());
         fornecedor.setStatus(request.getStatus());
 
+        fornecedor = repository.save(fornecedor);
+
         return mapper.toResponse(fornecedor);
     }
 
-    public void  deletar(@PathVariable Long id){
+    public void  deletar( Long id){
         repository.delete(buscarFornecedor(id));
     }
 
