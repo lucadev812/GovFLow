@@ -7,17 +7,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
 
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFound(

@@ -4,9 +4,11 @@ import com.govflow.gov.flow.dto.request.FornecedorRequest;
 import com.govflow.gov.flow.dto.response.FornecedorResponse;
 import com.govflow.gov.flow.entity.Fornecedor;
 import com.govflow.gov.flow.enums.Status;
+import com.govflow.gov.flow.exception.BusinessException;
 import com.govflow.gov.flow.exception.DuplicateResourceException;
 import com.govflow.gov.flow.exception.ResourceNotFoundException;
 import com.govflow.gov.flow.mapper.FornecedorMapper;
+import com.govflow.gov.flow.repository.ContratoRepository;
 import com.govflow.gov.flow.repository.FornecedorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FornecedorServiceTest {
+
+    @Mock
+    private ContratoRepository contratoRepository;
 
     @Mock
     private FornecedorRepository repository;
@@ -301,6 +306,8 @@ class FornecedorServiceTest {
     @Test
     void deveDeletarFornecedorComSucesso() {
         when(repository.findById(1L)).thenReturn(Optional.of(fornecedor));
+        when(contratoRepository.existsByFornecedor_Id(1L))
+                .thenReturn(false);
 
         fornecedorService.deletar(1L);
 
@@ -323,6 +330,29 @@ class FornecedorServiceTest {
         );
 
         verify(repository).findById(99L);
+        verify(repository, never()).delete(any());
+    }
+
+    @Test
+    void deveImpedirExclusaoDeFornecedorComContratosVinculados() {
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(fornecedor));
+
+        when(contratoRepository.existsByFornecedor_Id(1L))
+                .thenReturn(true);
+
+        BusinessException exception = assertThrows(
+                BusinessException.class,
+                () -> fornecedorService.deletar(1L)
+        );
+
+        assertEquals(
+                "O fornecedor não pode ser excluído porque possui contratos vinculados",
+                exception.getMessage()
+        );
+
+        verify(repository).findById(1L);
+        verify(contratoRepository).existsByFornecedor_Id(1L);
         verify(repository, never()).delete(any());
     }
 }

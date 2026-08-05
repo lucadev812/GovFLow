@@ -3,13 +3,14 @@ package com.govflow.gov.flow.service;
 import com.govflow.gov.flow.dto.request.FornecedorRequest;
 import com.govflow.gov.flow.dto.response.FornecedorResponse;
 import com.govflow.gov.flow.entity.Fornecedor;
+import com.govflow.gov.flow.exception.BusinessException;
 import com.govflow.gov.flow.exception.DuplicateResourceException;
 import com.govflow.gov.flow.exception.ResourceNotFoundException;
 import com.govflow.gov.flow.mapper.FornecedorMapper;
+import com.govflow.gov.flow.repository.ContratoRepository;
 import com.govflow.gov.flow.repository.FornecedorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class FornecedorService {
 
     private final FornecedorRepository repository;
     private final FornecedorMapper mapper;
+    private final ContratoRepository contratoRepository;
 
     public FornecedorResponse salvar(FornecedorRequest request){
 
@@ -61,8 +63,16 @@ public class FornecedorService {
         return mapper.toResponse(fornecedor);
     }
 
-    public void  deletar( Long id){
-        repository.delete(buscarFornecedor(id));
+    public void deletar(Long id) {
+        Fornecedor fornecedor = buscarFornecedor(id);
+
+        if (contratoRepository.existsByFornecedor_Id(id)) {
+            throw new BusinessException(
+                    "O fornecedor não pode ser excluído porque possui contratos vinculados"
+            );
+        }
+
+        repository.delete(fornecedor);
     }
 
 
